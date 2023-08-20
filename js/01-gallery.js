@@ -2,6 +2,7 @@ import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 const gallery = document.querySelector(".gallery");
+const galleryArr = [];
 
 galleryItems.forEach(addItem);
 
@@ -25,5 +26,7 @@ function addItem(element) {
 
   galleryLink.append(galleryImage);
   galleryItem.append(galleryLink);
-  gallery.append(galleryItem);
+  galleryArr.push(galleryItem);
 }
+
+gallery.append(...galleryArr);

@@ -3,6 +3,8 @@ import { galleryItems } from "./gallery-items.js";
 
 const gallery = document.querySelector(".gallery");
 
+const galleryArr = [];
+
 galleryItems.forEach(addItem);
 
 function addItem(element) {
@@ -12,7 +14,6 @@ function addItem(element) {
   const galleryLink = document.createElement("a");
   galleryLink.classList.add("gallery__link");
   galleryLink.href = element.original;
-  galleryLink.addEventListener("click", (e) => e.preventDefault());
 
   const galleryImage = document.createElement("img");
   galleryImage.classList.add("gallery__image");
@@ -21,12 +22,16 @@ function addItem(element) {
 
   galleryLink.append(galleryImage);
   galleryItem.append(galleryLink);
-  gallery.append(galleryItem);
+  galleryArr.push(galleryItem);
 }
 
-gallery.addEventListener("click", () => {
-  const lightbox = new SimpleLightbox(".gallery a", {
-    captionsData: "alt",
-    captionDelay: 250,
-  });
+gallery.append(...galleryArr);
+
+const lightbox = new SimpleLightbox(".gallery a", {
+  captionsData: "alt",
+  captionDelay: 250,
+});
+
+gallery.addEventListener("click", (e) => {
+  e.preventDefault();
 });
