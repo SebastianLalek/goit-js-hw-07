@@ -2,31 +2,28 @@ import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 const gallery = document.querySelector(".gallery");
-const galleryArr = [];
 
-galleryItems.forEach(addItem);
+const galleryImages = galleryItems
+  .map(
+    (img) =>
+      `<li class="gallery__item">
+  <a class="gallery__link" href="${img.original}">
+  <img
+  class="gallery__image"
+  src="${img.preview}"
+  data-source="${img.original}"
+  alt="${img.description}"
+  />
+  </a>
+  </li>`
+  )
+  .join("");
 
-function addItem(element) {
-  const galleryItem = document.createElement("li");
-  galleryItem.classList.add("gallery__item");
+gallery.insertAdjacentHTML("afterbegin", galleryImages);
 
-  const galleryLink = document.createElement("a");
-  galleryLink.classList.add("gallery__link");
-  galleryLink.href = element.original;
-  galleryLink.onclick = () => {
-    basicLightbox.create(`<img width="800" src=${element.original}>`).show();
-  };
-  galleryLink.addEventListener("click", (e) => e.preventDefault());
-
-  const galleryImage = document.createElement("img");
-  galleryImage.classList.add("gallery__image");
-  galleryImage.src = element.preview;
-  galleryImage.dataset.source = element.original;
-  galleryImage.alt = element.description;
-
-  galleryLink.append(galleryImage);
-  galleryItem.append(galleryLink);
-  galleryArr.push(galleryItem);
-}
-
-gallery.append(...galleryArr);
+gallery.addEventListener("click", (e) => {
+  e.preventDefault();
+  basicLightbox
+    .create(`<img src="${e.target.dataset.source}" width="800">`)
+    .show();
+});
