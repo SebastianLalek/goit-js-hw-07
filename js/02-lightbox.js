@@ -11,7 +11,6 @@ const galleryImages = galleryItems
   <img
   class="gallery__image"
   src="${img.preview}"
-  data-source="${img.original}"
   alt="${img.description}"
   />
   </a>
